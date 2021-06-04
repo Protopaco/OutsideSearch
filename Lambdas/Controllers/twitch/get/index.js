@@ -8,10 +8,11 @@ exports.handler = async (event) => {
 
         const { access_token } = await get_access_token();
         const searchResults = await search_twitch(access_token, search);
+        const parsedSearchResults = searchResults.map(({ id, cover, name, url }) => { return { igdb_id: id, cover, name, info_url: url } })
 
         return {
             statusCode: 200,
-            body: JSON.stringify(searchResults),
+            body: JSON.stringify(parsedSearchResults),
         };
     }
 
